@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="buttonShow">Получить список пользователей</button>
+  <div id="users"></div>
+  <script>
+    const usr = document.querySelector('#users')
+    const btn = document.querySelector('#buttonShow')
+    async function getUsers() {
+      const url = 'https://jsonplaceholder.typicode.com/users';
+      const users = await fetch(url).then(result=>result.json())
+      users.forEach(user => {
+        const {name, email, phone, website} = user;
+        usr.innerHTML += `
+        <div class = 'user'>
+          <h3>${name}</h3>
+          <p><a href = 'mailto:${email}'>${email}</a>
+          <p><a href = 'mailto:${phone}'>${phone}</a>
+          <p><a href = 'mailto:${website}'>${website}</a>
+        </div>
+        `
+      });
+    }
+    function logger(){
+      console.log("клик", new Date().toLocaleTimeString('ru-RU'))
+    }
+    btn.addEventListener('click', getUsers)
+    btn.addEventListener('click', logger)
+    /* Назначить асинхронный обработчик для кнопки button, который через fetch API делает запрос на адрес https://jsonplaceholder.typicode.com/users и визуализирует произвольным способом данные внутри блока с идентификатором users */
+  </script>
+</body>
+</html>
